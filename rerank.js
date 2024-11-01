@@ -1,9 +1,11 @@
 import {CohereRerank} from "@langchain/cohere";
 import {Document} from "@langchain/core/documents";
 
-const query = "What is the capital of the United States?";
-
-const docs = [
+//
+// Test dataset of the documents.
+// Replace it with the result set from RAG pipeline.
+//
+const ragResSet = [
     new Document({
         metadata: {},
         id: "1",
@@ -43,22 +45,30 @@ const docs = [
     }),
 ];
 
-const cohereRerank = new CohereRerank({
-    apiKey: process.env.COHERE_API_KEY, // Default
-    model: "rerank-english-v2.0",
+//
+// Test user query.
+// Replace it with the actual user query from chqtbot.
+//
+const usrQry = "What is the capital of the United States?";
+
+//
+// Make sure to add COHERE_API_KEY as env variable (in Shell or in IDE Run Configuration).
+//
+const reranker = new CohereRerank({
+    apiKey: process.env.COHERE_API_KEY,
+    model: "rerank-english-v2.0", // Reranking model name.
+    topN: 5, // Get ONLY the top 5 results.
 });
 
-const rerankedDocuments = await cohereRerank.rerank(docs, query, {
-    topN: 5,
-});
+//
+// Use re-ranking model to re-rank the RAG result set based on the user query.
+//
 
-console.log(rerankedDocuments);
-/**
- [
- { index: 3, relevanceScore: 0.9871293 },
- { index: 1, relevanceScore: 0.29961726 },
- { index: 4, relevanceScore: 0.27542195 },
- { index: 0, relevanceScore: 0.08977329 },
- { index: 2, relevanceScore: 0.041462272 }
- ]
- */
+// Return indexes of the original RAG result set.
+const rerankedDocs = await reranker.rerank(ragResSet, usrQry);
+
+// Return actual documents from the original RAG result set.
+//const rerankedDocs = await reranker.compressDocuments(ragResSet, usrQry);
+
+// Gets indexes of the documents.
+console.log(rerankedDocs);
