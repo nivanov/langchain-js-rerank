@@ -1,2 +1,2 @@
 # langchain-js-rerank
-LangchainJS Re-ranking Example
+LangchainJS Re-Ranking Example
