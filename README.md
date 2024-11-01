@@ -1,8 +1,9 @@
 # Re-Ranking LangchainJS Example  
-Quick example based on the [LangchainJS example](https://js.langchain.com/docs/integrations/document_compressors/cohere_rerank/) of re-ranking using Cohere reranking model.
+Quick example based on the [LangchainJS example](https://js.langchain.com/docs/integrations/document_compressors/cohere_rerank/) of re-ranking using [Cohere](https://docs.cohere.com/docs/rate-limits) reranking model.
 
 ## Prerequisites 
- - [NodeJS](https://nodejs.org/en/download/package-manager)
+ - Install [NodeJS](https://nodejs.org/en/download/package-manager)
+ - Get Cohere eval or prod API key at https://docs.cohere.com/docs/rate-limits
 
 ## Installation
 ```shell
